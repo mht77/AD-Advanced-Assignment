@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4360267543009625072}
   - component: {fileID: 134331474}
   - component: {fileID: 8006665734036604242}
+  - component: {fileID: 7948316401745601537}
   m_Layer: 5
   m_Name: Letter
   m_TagString: Untagged
@@ -135,6 +136,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectColor: {r: 0.9056604, g: 0.59842026, b: 0.09825563, a: 1}
+--- !u!114 &7948316401745601537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360267543009625070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff6ec89de154d2a84bdcc3c6b2d6d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 0
 --- !u!1 &4360267543658672000
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,4 +227,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A
+  m_Text: -1
