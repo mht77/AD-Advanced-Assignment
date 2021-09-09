@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectColor: {r: 0.9056604, g: 0.59842026, b: 0.09825563, a: 1}
+  CorrectColor: {r: 0.063412234, g: 0.8962264, b: 0.13079321, a: 1}
 --- !u!114 &7948316401745601537
 MonoBehaviour:
   m_ObjectHideFlags: 0

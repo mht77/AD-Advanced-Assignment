@@ -15794,8 +15794,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -67.576, y: 0}
+  m_SizeDelta: {x: -137.15, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900946344
 MonoBehaviour:
@@ -16051,6 +16051,7 @@ GameObject:
   - component: {fileID: 1932649342}
   - component: {fileID: 1932649341}
   - component: {fileID: 1932649343}
+  - component: {fileID: 1932649344}
   m_Layer: 5
   m_Name: WordsHolder
   m_TagString: Untagged
@@ -16097,7 +16098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16130,8 +16131,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 10
-    m_Bottom: 10
+    m_Top: 3
+    m_Bottom: 3
   m_ChildAlignment: 1
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
@@ -16141,6 +16142,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1932649344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932649339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbfdd09e4d524676b5cb93e0b5ccb5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordsModel: {fileID: 11400000, guid: 445f0291fd2494da1acd5359910da39a, type: 2}
+  WordsTextHolder: {fileID: 1932649339}
+  WordText: {fileID: 5501243575589776659, guid: 6dd2294239a59465fa1d15053c3ee09a, type: 3}
 --- !u!1001 &1961831625
 PrefabInstance:
   m_ObjectHideFlags: 0
