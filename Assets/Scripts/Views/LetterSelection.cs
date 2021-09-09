@@ -1,3 +1,4 @@
+using Controllers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,20 +7,37 @@ namespace Views
     public class LetterSelection : MonoBehaviour
     {
         private Image BGImage;
+        private Color beforeColor;
         [SerializeField] private Color SelectColor;
+        [SerializeField] private Color CorrectColor;
         private void Awake()
         {
             BGImage = GetComponent<Image>();
             BGImage.color = Color.white;
-            GetComponent<Button>().onClick.AddListener(SetColor);
+            beforeColor = Color.white;
+            GetComponent<Button>().onClick.AddListener(Select);
+            GetComponent<Button>().onClick.AddListener(WordCheck.CheckWord);
         }
 
-        private void SetColor()
+        private void Select()
         {
-            if (BGImage.color==Color.white)
+            if (BGImage.color == SelectColor)
+            {
+                WordCheck.UserSelectedLetters.Remove(GetComponent<LetterId>());
+                BGImage.color = beforeColor;
+                beforeColor = BGImage.color;
+            }
+            else
+            {
+                WordCheck.UserSelectedLetters.Add(GetComponent<LetterId>());
                 BGImage.color = SelectColor;
-            else if (BGImage.color==SelectColor)
-                BGImage.color = Color.white;
+            }
         }
+
+        public void SetCorrectColor()
+        {
+            BGImage.color = CorrectColor;
+        }
+        
     }
 }
