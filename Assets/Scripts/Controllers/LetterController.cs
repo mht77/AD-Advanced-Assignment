@@ -151,14 +151,13 @@ namespace Controllers
         private int FindCellHorizontally(int wordSize)
         {
             bool available = true;
-            int startRow, cellId;
             int startColumn = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
-                startRow = Random.Range(1, TableSize + 1); //random numbers are between 1, TableSize
+                var startRow = Random.Range(1, TableSize + 1);
             while (filledRows.Contains(startRow))
             {
                 startRow = Random.Range(1, TableSize + 1);
             }
-            cellId = GetSellId(startRow, startColumn);
+            var cellId = GetSellId(startRow, startColumn);
             int startCell = cellId;
             for (int i = 0; i < wordSize; i++)
             {
