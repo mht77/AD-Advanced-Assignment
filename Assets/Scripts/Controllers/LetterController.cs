@@ -12,9 +12,9 @@ namespace Controllers
         public WordsModel WordsModel;
         private List<Text> lettersTexts; 
         [SerializeField] private int TableSize;
-        private List<int> filledRows = new List<int>();
-        private List<int> filledColumns = new List<int>();
-        private List<int> filledIds = new List<int>();
+        private readonly List<int> filledRows = new List<int>();
+        private readonly List<int> filledColumns = new List<int>();
+        private readonly List<int> filledIds = new List<int>();
         private void Awake()
         {
             lettersTexts = new List<Text>(LetterHolder.GetComponentsInChildren<Text>());
@@ -36,11 +36,15 @@ namespace Controllers
         {
             foreach (var word in WordsModel.Words)
             {
-                var vOrh = Random.Range(0, 2);
-                if (vOrh == 0) // means horizontal
-                    HorizontalSet(word);
-                else if (vOrh==1)
-                    VerticalSet(word);
+                bool res = false;
+                do
+                {
+                    var vOrh = Random.Range(0, 2);
+                    if (vOrh == 0) // means horizontal
+                        res = HorizontalSet(word);
+                    else if (vOrh==1)
+                        res = VerticalSet(word);
+                } while (!res);
             }
         }
 
@@ -54,91 +58,93 @@ namespace Controllers
             }
         }
 
-        private void VerticalSet(string word)
+        private bool VerticalSet(string word)
         {
             int wordSize = word.Length;
             var cellId = FindCellVertically(wordSize);
+            if (cellId == -1)
+                return false;
             List<LetterId> selectCellsId = new List<LetterId>();
             for (int i = 0; i < wordSize; i++)
             {
                 lettersTexts[cellId].text = word[i].ToString();
                 filledIds.Add(cellId);
-                selectCellsId.Add(lettersTexts[cellId].transform.GetComponent<LetterId>());
+                selectCellsId.Add(lettersTexts[cellId].transform.GetComponentInParent<LetterId>());
                 cellId += TableSize;
             }
+            foreach (var cell in selectCellsId)
+            {
+                Debug.Log(cell.Id);
+            }
             WordCheck.WordsPosition.Add(word, selectCellsId);
+            return true;
         }
 
         private int FindCellVertically(int wordSize)
         {
             bool available = true;
-            int cellId, startColumn;
-            while (true)
+            var startColumn = Random.Range(1, TableSize + 1);
+            while (filledColumns.Contains(startColumn))
             {
                 startColumn = Random.Range(1, TableSize + 1);
-                while (filledColumns.Contains(startColumn))
-                {
-                    startColumn = Random.Range(1, TableSize + 1);
-                }
-                int startRow = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
-                cellId = GetSellId(startRow, startColumn);
-                int startCell = cellId;
-                for (int i = 0; i < wordSize; i++)
-                {
-                    if (filledIds.Contains(startCell))
-                    {
-                        available = false;
-                    }
-                    startCell += TableSize;
-                }
-                if (available)
-                    break;
             }
+            int startRow = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
+            var cellId = GetSellId(startRow, startColumn);
+            int startCell = cellId;
+            for (int i = 0; i < wordSize; i++)
+            {
+                if (filledIds.Contains(startCell))
+                {
+                    available = false;
+                }
+                startCell += TableSize;
+            }
+            if (!available)
+                return -1;
             filledColumns.Add(startColumn);
             return cellId;
         }
 
-        private void HorizontalSet(string word)
+        private bool HorizontalSet(string word)
         {
             int wordSize = word.Length;
             var cellId = FindCellHorizontally(wordSize);
+            if (cellId == -1)
+                return false;
             List<LetterId> selectCellsId = new List<LetterId>();
             for (int i = 0; i < wordSize; i++)
             {
                 lettersTexts[cellId].text = word[i].ToString();
                 filledIds.Add(cellId);
-                selectCellsId.Add(lettersTexts[cellId].transform.GetComponent<LetterId>());
+                selectCellsId.Add(lettersTexts[cellId].transform.GetComponentInParent<LetterId>());
                 cellId++;
             }
             WordCheck.WordsPosition.Add(word, selectCellsId);
+            return true;
         }
 
         private int FindCellHorizontally(int wordSize)
         {
             bool available = true;
             int startRow, cellId;
-            while (true)
-            {
-                int startColumn = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
+            int startColumn = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
                 startRow = Random.Range(1, TableSize + 1); //random numbers are between 1, TableSize
-                while (filledRows.Contains(startRow))
-                {
-                    startRow = Random.Range(1, TableSize + 1);
-                }
-                cellId = GetSellId(startRow, startColumn);
-                Debug.Log(cellId);
-                int startCell = cellId;
-                for (int i = 0; i < wordSize; i++)
-                {
-                    if (filledIds.Contains(startCell))
-                    {
-                        available = false;
-                    }
-                    startCell++;
-                }
-                if (available)
-                    break;
+            while (filledRows.Contains(startRow))
+            {
+                startRow = Random.Range(1, TableSize + 1);
             }
+            cellId = GetSellId(startRow, startColumn);
+            int startCell = cellId;
+            for (int i = 0; i < wordSize; i++)
+            {
+                if (filledIds.Contains(startCell))
+                {
+                    available = false;
+                }
+                startCell++;
+            }
+            if (!available)
+                return -1;
             Debug.Log(cellId);
             filledRows.Add(startRow);
             return cellId;

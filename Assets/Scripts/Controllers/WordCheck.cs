@@ -12,21 +12,22 @@ namespace Controllers
 
         public static void CheckWord()
         {
-            foreach (var word in WordsPosition)
-            {
-                Debug.Log(word.Key);
-            }
-            foreach (var letter in UserSelectedLetters)
-            {
-                Debug.Log(letter.Id);
-            }
             foreach (var wordPosition in WordsPosition)
             {
-                if (wordPosition.Value == UserSelectedLetters)
+                bool check = true;
+                foreach (var letter in wordPosition.Value)
                 {
-                    foreach (var letter in UserSelectedLetters)
+                    if (!UserSelectedLetters.Contains(letter))
                     {
-                        letter.transform.GetComponent<LetterSelection>().SetCorrectColor();
+                        check = false;
+                    }
+                }
+                if (check)
+                {
+                    Debug.Log("Correct!");
+                    foreach (var selectedLetter in UserSelectedLetters)
+                    {
+                        selectedLetter.transform.GetComponent<LetterSelection>().SetCorrectColor();
                     }
                 }
             }
