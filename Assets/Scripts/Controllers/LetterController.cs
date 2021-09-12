@@ -15,6 +15,10 @@ namespace Controllers
         private readonly List<int> filledRows = new List<int>();
         private readonly List<int> filledColumns = new List<int>();
         private readonly List<int> filledIds = new List<int>();
+        
+        /// <summary>
+        /// get components and raise put words method
+        /// </summary>
         private void Awake()
         {
             lettersTexts = new List<Text>(LetterHolder.GetComponentsInChildren<Text>());
@@ -32,6 +36,9 @@ namespace Controllers
             SetOtherLetters();
         }
 
+        /// <summary>
+        /// randomize words in 2 groups of vertical and horizontal
+        /// </summary>
         private void PutWords()
         {
             foreach (var word in WordsModel.Words)
@@ -47,7 +54,9 @@ namespace Controllers
                 } while (!res);
             }
         }
-
+        /// <summary>
+        /// set a char for remaining cells
+        /// </summary>
         private void SetOtherLetters()
         {
             string chars = "abcdefghijklmnopqrstuvwxyz";
@@ -57,7 +66,11 @@ namespace Controllers
                     letter.text = chars[Random.Range(0, chars.Length)].ToString();
             }
         }
-
+        /// <summary>
+        /// set chars of a word in the table vertically
+        /// </summary>
+        /// <param name="word"> the word to be put in table</param>
+        /// <returns>whether if vertical placement is not possible or not (for a randomize column number)</returns>
         private bool VerticalSet(string word)
         {
             int wordSize = word.Length;
@@ -79,7 +92,11 @@ namespace Controllers
             WordCheck.WordsPosition.Add(word, selectCellsId);
             return true;
         }
-
+        /// <summary>
+        /// find a suitable cell for starting a word placement vertically
+        /// </summary>
+        /// <param name="wordSize"> length of the word</param>
+        /// <returns>the suitable cell id or -1 if it is not possible(for that random column number)</returns>
         private int FindCellVertically(int wordSize)
         {
             bool available = true;
@@ -104,7 +121,11 @@ namespace Controllers
             filledColumns.Add(startColumn);
             return cellId;
         }
-
+        /// <summary>
+        /// set chars of a word in the table horizontally
+        /// </summary>
+        /// <param name="word"> the word to be put in table</param>
+        /// <returns>whether if horizontal placement is not possible or not</returns>
         private bool HorizontalSet(string word)
         {
             int wordSize = word.Length;
@@ -122,7 +143,11 @@ namespace Controllers
             WordCheck.WordsPosition.Add(word, selectCellsId);
             return true;
         }
-
+        /// <summary>
+        /// find a suitable cell for starting a word placement horizontally
+        /// </summary>
+        /// <param name="wordSize"> length of the word</param>
+        /// <returns>the suitable cell id or -1 if it is not possible(for that random row number)</returns>
         private int FindCellHorizontally(int wordSize)
         {
             bool available = true;
@@ -149,7 +174,13 @@ namespace Controllers
             filledRows.Add(startRow);
             return cellId;
         }
-
+        
+        /// <summary>
+        /// calculate cell id of given row and column number
+        /// </summary>
+        /// <param name="row"> the row number</param>
+        /// <param name="column"> the column number</param>
+        /// <returns> cell id </returns>
         private int GetSellId(int row, int column)
         {
             int res = 0;

@@ -6,37 +6,48 @@ namespace Views
 {
     public class LetterSelection : MonoBehaviour
     {
-        private Image BGImage;
+        private Image bgImage;
         private Color beforeColor;
         [SerializeField] private Color SelectColor;
         [SerializeField] private Color CorrectColor;
+        
+        /// <summary>
+        /// 1) add listener actions for btn click event
+        /// 2) set color and component obj
+        /// </summary>
         private void Awake()
         {
-            BGImage = GetComponent<Image>();
-            BGImage.color = Color.white;
+            bgImage = GetComponent<Image>();
+            bgImage.color = Color.white;
             beforeColor = Color.white;
             GetComponent<Button>().onClick.AddListener(Select);
             GetComponent<Button>().onClick.AddListener(WordCheck.CheckWord);
         }
-
+        
+        /// <summary>
+        /// change color of the cell and update list of user selected cells
+        /// </summary>
         private void Select()
         {
-            if (BGImage.color == SelectColor)
+            if (bgImage.color == SelectColor)
             {
                 WordCheck.UserSelectedLetters.Remove(GetComponent<LetterId>());
-                BGImage.color = beforeColor;
-                beforeColor = BGImage.color;
+                bgImage.color = beforeColor;
+                beforeColor = bgImage.color;
             }
             else
             {
                 WordCheck.UserSelectedLetters.Add(GetComponent<LetterId>());
-                BGImage.color = SelectColor;
+                bgImage.color = SelectColor;
             }
         }
 
+        /// <summary>
+        /// change cell color to correct color 
+        /// </summary>
         public void SetCorrectColor()
         {
-            BGImage.color = CorrectColor;
+            bgImage.color = CorrectColor;
         }
         
     }
