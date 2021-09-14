@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Utils.SingleTones;
 using Views;
 
 namespace Controllers
 {
-    public static class WordCheck
+    public class WordCheck: MonoSingleton<WordCheck>
     {
-        public static readonly List<LetterId> UserSelectedLetters = new List<LetterId>();
-        public static readonly Dictionary<string, List<LetterId>> WordsPosition = 
+        public readonly List<LetterId> UserSelectedLetters = new List<LetterId>();
+        public readonly Dictionary<string, List<LetterId>> WordsPosition = 
             new Dictionary<string, List<LetterId>>();
         
         /// <summary>
         /// check if the selected cells is a word
         /// </summary>
-        public static void CheckWord()
+        public void CheckWord()
         {
             foreach (var wordPosition in WordsPosition)
             {
