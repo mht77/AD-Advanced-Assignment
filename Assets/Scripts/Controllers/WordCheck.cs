@@ -10,7 +10,10 @@ namespace Controllers
         public readonly List<LetterId> UserSelectedLetters = new List<LetterId>();
         public readonly Dictionary<string, List<LetterId>> WordsPosition = 
             new Dictionary<string, List<LetterId>>();
-        
+
+        private int noCorrectWords;
+
+        [SerializeField] private GameObject FinishPanel;
         /// <summary>
         /// check if the selected cells is a word
         /// </summary>
@@ -29,13 +32,23 @@ namespace Controllers
                 if (check)
                 {
                     Debug.Log("Correct!");
+                    noCorrectWords++;
                     WordController.WordImages[wordPosition.Key].color = new Color(0,1f,0,0.5f);
                     foreach (var selectedLetter in UserSelectedLetters)
                     {
                         selectedLetter.transform.GetComponent<LetterSelection>().SetCorrectColor();
                     }
                     UserSelectedLetters.Clear();
+                    CheckFinish();
                 }
+            }
+        }
+
+        private void CheckFinish()
+        {
+            if (noCorrectWords == WordsPosition.Count)
+            {
+                FinishPanel.SetActive(true);
             }
         }
     }
