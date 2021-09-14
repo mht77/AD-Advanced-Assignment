@@ -22,6 +22,7 @@ namespace Views
             beforeColor = Color.white;
             GetComponent<Button>().onClick.AddListener(Select);
             GetComponent<Button>().onClick.AddListener(WordCheck.Instance.CheckWord);
+            WordCheck.Instance.TableComplete += DisableLetters;
         }
         
         /// <summary>
@@ -50,5 +51,12 @@ namespace Views
             bgImage.color = CorrectColor;
         }
         
+        /// <summary>
+        /// remove btn listeners if all words has been found!
+        /// </summary>
+        private void DisableLetters()
+        {
+            GetComponent<Button>().onClick.RemoveAllListeners();
+        }
     }
 }
