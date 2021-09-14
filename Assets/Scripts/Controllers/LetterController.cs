@@ -31,7 +31,7 @@ namespace Controllers
                 counter++;
             }
             PutWords();
-            SetOtherLetters();
+            SetOtherCells();
         }
 
         /// <summary>
@@ -55,13 +55,24 @@ namespace Controllers
         /// <summary>
         /// set a char for remaining cells
         /// </summary>
-        private void SetOtherLetters()
+        private void SetOtherCells()
         {
-            string chars = "abcdefghijklmnopqrstuvwxyz";
-            foreach (var letter in lettersTexts)
+            if (!WordsModel.IsNumber)
             {
-                if (letter.text == (-1).ToString())
-                    letter.text = chars[Random.Range(0, chars.Length)].ToString();
+                string chars = "abcdefghijklmnopqrstuvwxyz";
+                foreach (var cell in lettersTexts)
+                {
+                    if (cell.text == (-1).ToString())
+                        cell.text = chars[Random.Range(0, chars.Length)].ToString();
+                }
+            }
+            else
+            {
+                foreach (var cell in lettersTexts)
+                {
+                    if (cell.text == (-1).ToString())
+                        cell.text = Random.Range(0, 10).ToString();
+                }
             }
         }
         /// <summary>
