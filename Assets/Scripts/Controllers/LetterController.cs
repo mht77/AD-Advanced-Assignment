@@ -22,6 +22,7 @@ namespace Controllers
         /// </summary>
         private void Start()
         {
+            WordCheck.Instance.WordsPosition.Clear();
             lettersTexts = new List<Text>(LetterHolder.GetComponentsInChildren<Text>());
             int counter = 0;
             foreach (var letterId in LetterHolder.transform.GetComponentsInChildren<LetterId>())
@@ -98,7 +99,7 @@ namespace Controllers
             {
                 startColumn = Random.Range(1, TableSize.Value + 1);
             }
-            int startRow = Random.Range(0 + wordSize, TableSize.Value + 2 - wordSize);
+            int startRow = Random.Range(wordSize-1, TableSize.Value + 2 - wordSize);
             var cellId = GetSellId(startRow, startColumn);
             int startCell = cellId;
             for (int i = 0; i < wordSize; i++)
@@ -144,7 +145,7 @@ namespace Controllers
         private int FindCellHorizontally(int wordSize)
         {
             bool available = true;
-            int startColumn = Random.Range(0 + wordSize, TableSize.Value + 2 - wordSize);
+            int startColumn = Random.Range(wordSize - 1, TableSize.Value + 2 - wordSize);
                 var startRow = Random.Range(1, TableSize.Value + 1);
             while (filledRows.Contains(startRow))
             {

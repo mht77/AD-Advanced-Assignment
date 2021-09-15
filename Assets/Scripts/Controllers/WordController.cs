@@ -17,6 +17,7 @@ namespace Controllers
         /// </summary>
         private void Awake()
         {
+            WordImages.Clear();
             foreach (var word in WordsModel.Words)
             {
                 var wordText = Instantiate(WordText, WordsTextHolder.transform);
