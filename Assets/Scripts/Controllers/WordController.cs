@@ -9,6 +9,10 @@ namespace Controllers
         public WordsModel WordsModel;
         [SerializeField] private GameObject WordsTextHolder;
         [SerializeField] private GameObject WordText;
+        
+        /// <summary>
+        /// set text of sidebar for words in the table
+        /// </summary>
         private void Awake()
         {
             foreach (var word in WordsModel.Words)
