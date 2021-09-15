@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Utils
@@ -6,5 +7,10 @@ namespace Utils
     public class IntVar : ScriptableObject
     {
         public int Value;
+
+        public void SetValue(string value)
+        {
+            Value = Convert.ToInt32(value);
+        }
     }
 }
