@@ -20,7 +20,7 @@ namespace Controllers
         /// <summary>
         /// get components and raise put words method
         /// </summary>
-        private void Awake()
+        private void Start()
         {
             lettersTexts = new List<Text>(LetterHolder.GetComponentsInChildren<Text>());
             int counter = 0;
@@ -30,10 +30,6 @@ namespace Controllers
                 counter++;
             }
             PutWords();
-        }
-
-        private void Start()
-        {
             SetOtherLetters();
         }
 

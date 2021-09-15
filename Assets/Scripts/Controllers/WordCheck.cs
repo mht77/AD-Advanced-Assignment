@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.SingleTones;
@@ -12,7 +13,7 @@ namespace Controllers
             new Dictionary<string, List<LetterId>>();
 
         private int noCorrectWords;
-
+        public event Action TableComplete;
         [SerializeField] private GameObject FinishPanel;
         /// <summary>
         /// check if the selected cells is a word
@@ -43,13 +44,22 @@ namespace Controllers
                 }
             }
         }
-
+        
+        /// <summary>
+        /// check if all words has been found!
+        /// </summary>
         private void CheckFinish()
         {
             if (noCorrectWords == WordsPosition.Count)
             {
+                OnTableComplete();
                 FinishPanel.SetActive(true);
             }
+        }
+
+        protected virtual void OnTableComplete()
+        {
+            TableComplete?.Invoke();
         }
     }
 }
