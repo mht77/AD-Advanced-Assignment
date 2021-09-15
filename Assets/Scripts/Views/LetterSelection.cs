@@ -21,7 +21,7 @@ namespace Views
             bgImage.color = Color.white;
             beforeColor = Color.white;
             GetComponent<Button>().onClick.AddListener(Select);
-            GetComponent<Button>().onClick.AddListener(WordCheck.CheckWord);
+            GetComponent<Button>().onClick.AddListener(WordCheck.Instance.CheckWord);
         }
         
         /// <summary>
@@ -31,13 +31,13 @@ namespace Views
         {
             if (bgImage.color == SelectColor)
             {
-                WordCheck.UserSelectedLetters.Remove(GetComponent<LetterId>());
+                WordCheck.Instance.UserSelectedLetters.Remove(GetComponent<LetterId>());
                 bgImage.color = beforeColor;
                 beforeColor = bgImage.color;
             }
             else
             {
-                WordCheck.UserSelectedLetters.Add(GetComponent<LetterId>());
+                WordCheck.Instance.UserSelectedLetters.Add(GetComponent<LetterId>());
                 bgImage.color = SelectColor;
             }
         }

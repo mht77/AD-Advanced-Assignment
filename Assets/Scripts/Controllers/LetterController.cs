@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 using Views;
 
 namespace Controllers
@@ -11,7 +12,7 @@ namespace Controllers
         public GameObject LetterHolder;
         public WordsModel WordsModel;
         private List<Text> lettersTexts; 
-        [SerializeField] private int TableSize;
+        [SerializeField] private IntVar TableSize;
         private readonly List<int> filledRows = new List<int>();
         private readonly List<int> filledColumns = new List<int>();
         private readonly List<int> filledIds = new List<int>();
@@ -83,9 +84,9 @@ namespace Controllers
                 lettersTexts[cellId].text = word[i].ToString();
                 filledIds.Add(cellId);
                 selectCellsId.Add(lettersTexts[cellId].transform.GetComponentInParent<LetterId>());
-                cellId += TableSize;
+                cellId += TableSize.Value;
             }
-            WordCheck.WordsPosition.Add(word, selectCellsId);
+            WordCheck.Instance.WordsPosition.Add(word, selectCellsId);
             return true;
         }
         /// <summary>
@@ -96,12 +97,12 @@ namespace Controllers
         private int FindCellVertically(int wordSize)
         {
             bool available = true;
-            var startColumn = Random.Range(1, TableSize + 1);
+            var startColumn = Random.Range(1, TableSize.Value + 1);
             while (filledColumns.Contains(startColumn))
             {
-                startColumn = Random.Range(1, TableSize + 1);
+                startColumn = Random.Range(1, TableSize.Value + 1);
             }
-            int startRow = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
+            int startRow = Random.Range(0 + wordSize, TableSize.Value + 2 - wordSize);
             var cellId = GetSellId(startRow, startColumn);
             int startCell = cellId;
             for (int i = 0; i < wordSize; i++)
@@ -110,7 +111,7 @@ namespace Controllers
                 {
                     available = false;
                 }
-                startCell += TableSize;
+                startCell += TableSize.Value;
             }
             if (!available)
                 return -1;
@@ -136,7 +137,7 @@ namespace Controllers
                 selectCellsId.Add(lettersTexts[cellId].transform.GetComponentInParent<LetterId>());
                 cellId++;
             }
-            WordCheck.WordsPosition.Add(word, selectCellsId);
+            WordCheck.Instance.WordsPosition.Add(word, selectCellsId);
             return true;
         }
         /// <summary>
@@ -147,11 +148,11 @@ namespace Controllers
         private int FindCellHorizontally(int wordSize)
         {
             bool available = true;
-            int startColumn = Random.Range(0 + wordSize, TableSize + 2 - wordSize);
-                var startRow = Random.Range(1, TableSize + 1);
+            int startColumn = Random.Range(0 + wordSize, TableSize.Value + 2 - wordSize);
+                var startRow = Random.Range(1, TableSize.Value + 1);
             while (filledRows.Contains(startRow))
             {
-                startRow = Random.Range(1, TableSize + 1);
+                startRow = Random.Range(1, TableSize.Value + 1);
             }
             var cellId = GetSellId(startRow, startColumn);
             int startCell = cellId;
@@ -178,7 +179,7 @@ namespace Controllers
         private int GetSellId(int row, int column)
         {
             int res = 0;
-            res += (row-1) * TableSize;
+            res += (row-1) * TableSize.Value;
             res += column - 1;
             return res;
         }
