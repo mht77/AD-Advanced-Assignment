@@ -28,10 +28,12 @@ namespace Controllers
                 if (check)
                 {
                     Debug.Log("Correct!");
+                    WordController.WordImages[wordPosition.Key].color = new Color(0,1f,0,0.5f);
                     foreach (var selectedLetter in UserSelectedLetters)
                     {
                         selectedLetter.transform.GetComponent<LetterSelection>().SetCorrectColor();
                     }
+                    UserSelectedLetters.Clear();
                 }
             }
         }

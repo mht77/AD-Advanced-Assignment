@@ -85,10 +85,6 @@ namespace Controllers
                 selectCellsId.Add(lettersTexts[cellId].transform.GetComponentInParent<LetterId>());
                 cellId += TableSize;
             }
-            foreach (var cell in selectCellsId)
-            {
-                Debug.Log(cell.Id);
-            }
             WordCheck.WordsPosition.Add(word, selectCellsId);
             return true;
         }
@@ -169,7 +165,6 @@ namespace Controllers
             }
             if (!available)
                 return -1;
-            Debug.Log(cellId);
             filledRows.Add(startRow);
             return cellId;
         }
