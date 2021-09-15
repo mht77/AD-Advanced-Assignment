@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using UnityEngine;
 
 namespace Models
@@ -9,27 +10,41 @@ namespace Models
     public class WordsModel: ScriptableObject
     {
         public List<string> Words = new List<string>();
-
-        public bool IsNumber;
-        
-        /// <summary>
-        /// limit the number of total words
-        /// </summary>
-        private void Awake()
+        [SerializeField] private bool isNumber;
+        public event Action ModeChange;
+        public bool IsNumber
         {
-            if (Words.Count>20) Words.RemoveRange(20,Words.Count-20);
+            get => isNumber;
+            set
+            {
+                isNumber = value;
+                OnModeChange();
+            }
         }
 
         /// <summary>
-        /// read words from a csv file with the specific name!
+        /// limit the number of total words
+        /// </summary>
+        private void OnEnable()
+        {
+            if (!File.Exists("Words.csv"))
+                GetCSVFile();
+            ModeChange += ReadCSV;
+            IsNumber = false;
+        }
+
+        /// <summary>
+        /// read words from a csv file with the specific name ("Words.csv")!
         /// </summary>
         [ContextMenu("Read CSV")]
         public void ReadCSV()
         {
+            if (IsNumber)
+                return;
             Words.Clear();
-            var reader = new StreamReader("Words.csv");
             try
             {
+                var reader = new StreamReader("Words.csv");
                 char[] comma = {','};
                 string[] splitValues = null;
                 var values = reader.ReadLine();
@@ -40,18 +55,46 @@ namespace Models
                         var valueWithoutSpace = value.Replace(" ", "");
                         Words.Add(valueWithoutSpace.ToLower());
                     }
-                Debug.Log("CSV Done");
-                IsNumber = false;
+                reader.Close();
             }
             catch (Exception e)
             {
                 Debug.Log(e);
             }
-            finally
-            {
-                reader.Close();
-            }
 
+        }
+
+        /// <summary>
+        /// get the csv file of words from github
+        /// </summary>
+        [ContextMenu("Get CSV file")]
+        private void GetCSVFile()
+        {
+            HttpWebRequest request = 
+                WebRequest.CreateHttp("https://raw.githubusercontent.com/mht77/AD-Advanced-Assignment/master/Words.csv");
+            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+            {
+                Stream dataStream = response.GetResponseStream();
+                if (dataStream != null)
+                {
+                    StreamReader reader = new StreamReader(dataStream);
+                    StreamWriter writer = new StreamWriter("Words.csv");
+                    writer.WriteLine(reader.ReadLine());
+                    reader.Close();
+                    writer.Close();
+                }
+                response.Close();
+            }
+        }
+
+        private void OnDisable()
+        {
+            ModeChange -= ReadCSV;
+        }
+
+        protected virtual void OnModeChange()
+        {
+            ModeChange?.Invoke();
         }
     }
 }

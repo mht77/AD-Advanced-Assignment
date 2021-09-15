@@ -7,7 +7,22 @@ namespace Controllers
     {
         [SerializeField] private WordsModel WordsModel;
         [SerializeField] private GameObject Tick;
-        
+
+        private void OnEnable()
+        {
+            WordsModel.ModeChange += TickActivation;
+        }
+
+        private void OnDisable()
+        {
+            WordsModel.ModeChange -= TickActivation;
+        }
+
+        private void TickActivation()
+        {
+            Tick.SetActive(WordsModel.IsNumber);
+        }
+
         /// <summary>
         /// change to numbers instead of words and reverse!
         /// </summary>
@@ -16,8 +31,7 @@ namespace Controllers
         {
             if (WordsModel.IsNumber)
             {
-                WordsModel.ReadCSV();
-                Tick.SetActive(false);
+                WordsModel.IsNumber = false;
             }
             else
             {
@@ -28,7 +42,6 @@ namespace Controllers
                     WordsModel.Words.Add(number.ToString());
                 }
                 WordsModel.IsNumber = true;
-                Tick.SetActive(true);
             }
         }
     }

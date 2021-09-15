@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: WordsData
   m_EditorClassIdentifier: Assembly-CSharp:Models:WordsModel
   Words:
-  - 968947
-  - 226419
-  - 439196
-  - 124578
-  - 230117
-  - 515660
-  IsNumber: 1
+  - apple
+  - banana
+  - orange
+  - grape
+  isNumber: 0
