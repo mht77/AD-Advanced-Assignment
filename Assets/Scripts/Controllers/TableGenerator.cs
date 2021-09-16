@@ -10,6 +10,9 @@ namespace Controllers
         [SerializeField] private GameObject Cell;
         [SerializeField] private GameObject TableParent;
         
+        /// <summary>
+        /// fill the table with cells
+        /// </summary>
         private void Awake()
         {
             GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;

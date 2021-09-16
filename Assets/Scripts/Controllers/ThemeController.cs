@@ -18,6 +18,10 @@ namespace Controllers
             WordsModel.ModeChange -= TickActivation;
         }
 
+        
+        /// <summary>
+        /// activate or deactivate the tick obj according to user input
+        /// </summary>
         private void TickActivation()
         {
             Tick.SetActive(WordsModel.IsNumber);
