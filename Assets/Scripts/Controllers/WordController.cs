@@ -11,12 +11,13 @@ namespace Controllers
         [SerializeField] private GameObject WordsTextHolder;
         [SerializeField] private GameObject WordText;
         public static readonly Dictionary<string, Image> WordImages = new Dictionary<string, Image>();
-        
+        [SerializeField] private GameObject BackToMenuBtn;
         /// <summary>
         /// set text of sidebar for words in the table
         /// </summary>
         private void Awake()
         {
+            WordCheck.Instance.TableComplete += OnTableComplete;
             WordImages.Clear();
             foreach (var word in WordsModel.Words)
             {
@@ -25,6 +26,15 @@ namespace Controllers
                 WordImages.Add(word, wordText.transform.GetComponentInChildren<Image>());
             }
         }
-        
+
+        private void OnDisable()
+        {
+            WordCheck.Instance.TableComplete -= OnTableComplete;
+        }
+
+        private void OnTableComplete()
+        {
+            BackToMenuBtn.SetActive(false);
+        }
     }
 }

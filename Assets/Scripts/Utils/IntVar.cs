@@ -10,7 +10,8 @@ namespace Utils
 
         public void SetValue(string value)
         {
-            Value = Convert.ToInt32(value);
+            if (!String.IsNullOrEmpty(value))
+                Value = Convert.ToInt32(value);
         }
     }
 }
