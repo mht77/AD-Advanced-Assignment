@@ -15,6 +15,8 @@ namespace Controllers
         private int noCorrectWords;
         public event Action TableComplete;
         [SerializeField] private GameObject FinishPanel;
+        
+        
         /// <summary>
         /// check if the selected cells is a word
         /// </summary>
