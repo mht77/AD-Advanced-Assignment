@@ -11,6 +11,8 @@ namespace Models
     {
         public List<string> Words = new List<string>();
         [SerializeField] private bool isNumber;
+
+        private const string fileName = "Words.csv";
         public event Action ModeChange;
         public bool IsNumber
         {
@@ -27,7 +29,7 @@ namespace Models
         /// </summary>
         private void OnEnable()
         {
-            if (!File.Exists("Words.csv"))
+            if (!File.Exists( Application.persistentDataPath + "/" + fileName))
                 GetCSVFile();
             ModeChange += ReadCSV;
             IsNumber = false;
@@ -44,7 +46,7 @@ namespace Models
             Words.Clear();
             try
             {
-                var reader = new StreamReader("Words.csv");
+                var reader = new StreamReader(Application.persistentDataPath + "/" + fileName);
                 char[] comma = {','};
                 string[] splitValues = null;
                 var values = reader.ReadLine();
@@ -78,7 +80,7 @@ namespace Models
                 if (dataStream != null)
                 {
                     StreamReader reader = new StreamReader(dataStream);
-                    StreamWriter writer = new StreamWriter("Words.csv");
+                    StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/" + fileName);
                     writer.WriteLine(reader.ReadLine());
                     reader.Close();
                     writer.Close();
